@@ -13,7 +13,11 @@ LINT="pocketlint"
 cd "$(git rev-parse --show-toplevel)"
 CWD=$(pwd)
 
-JSPATH=$(git status --porcelain | grep ".*js$" | awk '{print $2}')
+JSEXCLUDE="jasmine-2\\.0\\.0"
+
+
+JSPATH=$(git status --porcelain | grep ".*js$" | \
+    grep -v $JSEXCLUDE | awk '{print $2}')
 HTMLPATH=$(git status --porcelain | grep ".*html$" | awk '{print $2}')
 CSSPATH=$(git status --porcelain | grep ".*css$" | awk '{print $2}')
 PYTHONPATH=$(git status --porcelain | grep ".*py$" | awk '{print $2}')
