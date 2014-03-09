@@ -4,6 +4,8 @@ from os import remove
 
 from selenium import webdriver
 
+print "Running Static Proxied Tests"
+
 BASEDIR = dirname(dirname(dirname(realpath(__file__))))
 REAL_FILE_PATH = BASEDIR + "/src/static-proxied.html"
 
