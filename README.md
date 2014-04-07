@@ -1,5 +1,6 @@
 Notice Javascript Bugs
 ======================
+
 [![Build Status](https://travis-ci.org/Victory/notice-javascript-bugs.svg?branch=master)](https://travis-ci.org/Victory/notice-javascript-bugs)
 
 
