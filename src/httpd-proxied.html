@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Static Proxied</title>
+  </head>
+  <body>
+    <p>
+      A simple static approach. Copy the file, inject a
+      window.addEventListener('error', someFunc) call, where someFunc
+      is a function that returns parsable code.
+    </p>
+    <p>
+      If this works, then with any luck,  we can proxy over HTTP(S).
+    </p>
+    <p id="putStuffHere">
+    </p>
+
+    <script>
+      aBadThing // throws error
+    </script>
+
+  </body>
+</html>
