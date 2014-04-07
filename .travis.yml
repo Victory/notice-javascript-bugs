@@ -9,4 +9,10 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 
+services:
+  - couchdb
+
+before_script:
+  - curl -X PUT localhost:5984/njb_tests
+
 script: python run-tests.py
