@@ -21,6 +21,3 @@ if __name__ == '__main__':
 
     shutdown_thread(cap)
     shutdown_thread(httpd)
-
-
-    pass
