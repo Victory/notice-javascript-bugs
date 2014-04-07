@@ -10,7 +10,7 @@ class TestCouchDbVersion(unittest.TestCase):
     def test_coudb_listening(self):
         urlh = urlopen('http://127.0.0.1:5984/')
         json_data = urlh.read()
-        couch_info = json.loads(json_data)
+        json.loads(json_data)
 
     def test_couchdb_version(self):
         urlh = urlopen('http://127.0.0.1:5984/')
