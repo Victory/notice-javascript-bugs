@@ -12,10 +12,8 @@ before_install:
   - sudo add-apt-repository ppa:couchdb/stable -y
   - sudo apt-get update -y
   - sudo apt-get remove couchdb couchdb-bin couchdb-common -yf
-  - sudo apt-get install -V couchdb
-
-services:
-  - couchdb
+  - sudo apt-get install -Vy couchdb
+  - sudo service couchdb start
 
 before_script:
   - curl -X PUT localhost:5984/njb_tests
