@@ -21,7 +21,7 @@ class TestCouchDbVersion(unittest.TestCase):
         assert 'couchdb' in couch_info
         assert 'version' in couch_info
         print couch_info['version']
-        assert re.match(r"^1\.0\.", couch_info['version'])
+        assert re.match(r"^1\.", couch_info['version'])
 
 
 if __name__ == "__main__":
