@@ -1,5 +1,6 @@
 import json
 import unittest
+import re
 
 import logging as log
 
@@ -19,7 +20,8 @@ class TestCouchDbVersion(unittest.TestCase):
 
         assert 'couchdb' in couch_info
         assert 'version' in couch_info
-        assert couch_info['version'] == '1.0.1'
+        print couch_info['version']
+        assert re.match(r"^1\.0\.", couch_info['version'])
 
 
 if __name__ == "__main__":
