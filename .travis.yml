@@ -13,7 +13,6 @@ before_install:
   - sudo apt-get update -yq
   - sudo apt-get remove couchdb couchdb-bin couchdb-common -yf
   - sudo rm /etc/couchdb/local.ini
-  - sudo ls /etc/couchdb/local.ini
   - sudo apt-get install -Vy couchdb
   - sudo service couchdb start
 
