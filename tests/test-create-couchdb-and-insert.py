@@ -1,6 +1,7 @@
 import urllib2
 import json
 
+
 def qdb(db, method, data=''):
     db_url = 'http://127.0.0.1:5984/' + str(db)
     opener = urllib2.build_opener(urllib2.HTTPHandler)
@@ -14,10 +15,12 @@ def qdb(db, method, data=''):
 
     return json.loads(data)
 
+
 def deletedb(name):
     dbs = qdb('_all_dbs', 'GET')
     if name in dbs:
         qdb(name, 'DELETE')
+
 
 if __name__ == '__main__':
     dbname = 'injected'
