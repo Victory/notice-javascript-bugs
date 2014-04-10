@@ -47,7 +47,8 @@ if __name__ == '__main__':
     print "Running jasmine..."
 
     spec_htmls = ['SpecPass.html',
-                 'SpecRunner.html']
+                  'SpecRunner.html',
+                  'SpectCouchdb.html']
 
     driver = webdriver.Firefox()
 
