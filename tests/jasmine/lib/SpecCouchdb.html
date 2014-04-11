@@ -11,13 +11,20 @@
     <script type="text/javascript" src="lib/jasmine-2.0.0/jasmine-html.js"></script>
     <script type="text/javascript" src="lib/jasmine-2.0.0/boot.js"></script>
     <script type="text/javascript"
-            src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.js"></script>
+            src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.js"></script>
 
 
     <script type="text/javascript">
       describe("Specs", function () {
         it("pass", function () {
           expect(true).toEqual(true);
+        });
+
+        it("run some ajax to a given url", function() {
+          spyOn($, "get");
+          $.get({url:"http://127.0.0.1:5984/"});
+          var url = $.ajax.mostRecentCall.args[0]["url"];
+          expect(url).toEqual("http://127.0.0.1:5984/");
         });
       });
     </script>
