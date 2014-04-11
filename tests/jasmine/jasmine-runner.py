@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
     spec_htmls = ['SpecPass.html',
                   'SpecRunner.html',
-                  'SpectCouchdb.html']
+                  'SpecCouchdb.html']
 
     driver = webdriver.Firefox()
 
