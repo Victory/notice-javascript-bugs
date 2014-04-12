@@ -16,15 +16,24 @@
 
     <script type="text/javascript">
       describe("Specs", function () {
-        it("pass", function () {
-          expect(true).toEqual(true);
+        var failed = false;
+
+        beforeEach(function (done) {
+          var couchdbUrl = "http://127.0.0.1:5984/"
+          spyOn($, "get").and.callThrough();
+          var jqxhr = $.get(
+            couchdbUrl,
+            function (data) {
+            });
+          jqxhr.fail(function () {
+            failed = true;
+            done();
+          });
         });
 
-        it("run some ajax to a given url", function() {
-          spyOn($, "get");
-          $.get({url:"http://127.0.0.1:5984/"});
-          var url = $.ajax.mostRecentCall.args[0]["url"];
-          expect(url).toEqual("http://127.0.0.1:5984/");
+        it("Should Create a Real AJAX Request", function (done) {
+          expect(failed).toBe(true);
+          done();
         });
       });
     </script>
