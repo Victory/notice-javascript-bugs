@@ -12,30 +12,69 @@
     <script type="text/javascript" src="lib/jasmine-2.0.0/boot.js"></script>
     <script type="text/javascript"
             src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.js"></script>
-
+    <script type="text/javascript"
+            src="http://127.0.0.1:5984/_utils/script/jquery.couch.js"></script>
 
     <script type="text/javascript">
-      describe("Specs", function () {
-        var failed = false;
 
+
+      // Create the XHR object.
+      function createCORSRequest(method, url) {
+        var xhr = new XMLHttpRequest();
+        if ("withCredentials" in xhr) {
+          // XHR for Chrome/Firefox/Opera/Safari.
+          xhr.open(method, url, true);
+        } else if (typeof XDomainRequest != "undefined") {
+          // XDomainRequest for IE.
+          xhr = new XDomainRequest();
+          xhr.open(method, url);
+        } else {
+          // CORS not supported.
+          xhr = null;
+        }
+        return xhr;
+      }
+
+      // Make the actual CORS request.
+      </script>
+
+    <script type="text/javascript">
+      describe("couchdb with CORS", function () {
+        var result = false;
         beforeEach(function (done) {
-          var couchdbUrl = "http://127.0.0.1:5984/"
-          spyOn($, "get").and.callThrough();
-          var jqxhr = $.get(
-            couchdbUrl,
-            function (data) {
-            });
-          jqxhr.fail(function () {
-            failed = true;
-            done();
-          });
+          function makeCorsRequest(uri, done) {
+            console.log("got uri: " + uri);
+            var xhr = createCORSRequest('GET', uri);
+            if (!xhr) {
+              console.log('CORS not supported');
+              done();
+              return;
+            }
+            // Response handlers.
+            xhr.onload = function() {
+
+              console.log('OK:' + xhr.responseText);
+              result = xhr.responseText;
+              done();
+
+            };
+            xhr.onerror = function() {
+              console.log('ERROR: ' + uri + '.');
+              done();
+            };
+            xhr.send();
+          }
+
+
+          makeCorsRequest('http://127.0.0.1:5984/', done);
         });
 
         it("Should Create a Real AJAX Request", function (done) {
-          expect(failed).toBe(true);
+          expect($.parseJSON(result).version).toBe('1.5.0');
           done();
         });
       });
+
     </script>
   </head>
 

@@ -8,9 +8,15 @@ from time import sleep
 
 from selenium import webdriver
 
-from MitmHttpProxy import MitmHttpProxy, Httpd, shutdown_thread
+from MitmHttpProxy import Httpd, shutdown_thread
+
+
+import urllib2
+import json
+
 
 if __name__ == '__main__':
+    sleep(2)
     os.chdir(dirname(realpath(__file__)) + "/lib")
 
     http_port = "8000"
@@ -20,6 +26,7 @@ if __name__ == '__main__':
 
     driver = webdriver.Firefox()
     driver.get("http://127.0.0.1:" + http_port + "/SpecCouchdb.html")
+    sleep(2)
     driver.close()
 
     shutdown_thread(httpd)
