@@ -12,8 +12,6 @@ before_install:
   - sudo apt-get install python-software-properties -y
   - sudo add-apt-repository ppa:couchdb/stable -y
   - sudo apt-get update -y
-  - sudo rm -r /var/lib/couchdb
-  - sudo rm /etc/couchdb/local.ini
   - sudo apt-get remove couchdb couchdb-bin couchdb-common -yf
   - sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" install couchdb
   - sudo service couchdb start
