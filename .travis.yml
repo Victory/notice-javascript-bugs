@@ -14,6 +14,11 @@ before_install:
   - sudo apt-get update -y
   - sudo apt-get remove couchdb couchdb-bin couchdb-common -yf
   - sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" install couchdb
+  - sudo echo "[httpd]" >> /etc/couchdb/local.ini
+  - sudo echo "enable_cors = true" >> /etc/couchdb/local.ini
+  - sudo echo "[cors]" >> /etc/couchdb/local.ini
+  - sudo echo "origins = *" >> /etc/couchdb/local.ini
+  - sudo echo "methods = GET, POST, PUT, DELETE" >> /etc/couchdb/local.ini
   - sudo service couchdb start
 
 before_script:
