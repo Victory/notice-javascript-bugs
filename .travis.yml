@@ -15,16 +15,11 @@ before_install:
   - sudo apt-get remove couchdb couchdb-bin couchdb-common -yf
   - sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" install couchdb
   - sudo service couchdb start
-  - sudo chmod 777 /etc/couchdb/
-  - sudo chmod a+w /etc/couchdb/local.ini
-  - sudo echo "[httpd]" >> /etc/couchdb/local.ini
-  - sudo echo "enable_cors = true" >> /etc/couchdb/local.ini
-  - sudo echo "[cors]" >> /etc/couchdb/local.ini
-  - sudo echo "origins = *" >> /etc/couchdb/local.ini
-  - sudo echo "methods = GET, POST, PUT, DELETE" >> /etc/couchdb/local.ini
-  - sudo service couchdb restart
 
 before_script:
+  - curl -X PUT localhost:5984/_config/httpd/enable_cors -d 'true'
+  - curl -X PUT localhost:5984/_config/cors/orgins -d '*'
+  - curl -X PUT localhost:5984/_config/cors/methods -d 'GET, POST, PUT, DELETE'
   - curl -X PUT localhost:5984/njb_tests
 
 script: python run-tests.py
