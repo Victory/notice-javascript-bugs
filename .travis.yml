@@ -17,9 +17,9 @@ before_install:
   - sudo service couchdb start
 
 before_script:
-  - curl -X PUT localhost:5984/_config/httpd/enable_cors -d 'true'
-  - curl -X PUT localhost:5984/_config/cors/orgins -d '*'
-  - curl -X PUT localhost:5984/_config/cors/methods -d 'GET, POST, PUT, DELETE'
+  - curl -X PUT localhost:5984/_config/httpd/enable_cors -d '"true"'
+  - curl -X PUT localhost:5984/_config/cors/orgins -d '"*"'
+  - curl -X PUT localhost:5984/_config/cors/methods -d '"GET, POST, PUT, DELETE"'
   - curl -X PUT localhost:5984/njb_tests
 
 script: python run-tests.py
