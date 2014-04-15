@@ -11,10 +11,6 @@ from selenium import webdriver
 from MitmHttpProxy import Httpd, shutdown_thread
 
 
-import urllib2
-import json
-
-
 if __name__ == '__main__':
     sleep(2)
     os.chdir(dirname(realpath(__file__)) + "/lib")
