@@ -12,6 +12,7 @@ from MitmHttpProxy import Httpd, shutdown_thread
 
 
 if __name__ == '__main__':
+    print "Running: Httpd jasmine runner"
     sleep(2)
     os.chdir(dirname(realpath(__file__)) + "/lib")
 

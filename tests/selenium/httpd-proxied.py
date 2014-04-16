@@ -4,18 +4,88 @@ from os.path import dirname, realpath
 project_base = dirname(dirname(dirname(realpath(__file__))))
 sys.path.append(project_base + "/external/mitm-http-proxy")
 
+import urllib2
+import json
+
 from time import sleep
 
 from selenium import webdriver
 
 from MitmHttpProxy import MitmHttpProxy, Httpd, shutdown_thread
 
+
+def qdb(db, method, data=''):
+    db_url = 'http://127.0.0.1:5984/' + str(db)
+    opener = urllib2.build_opener(urllib2.HTTPHandler)
+    request = urllib2.Request(db_url, data=data)
+    request.add_header('Content-Type', 'application/json')
+    request.get_method = lambda: method
+    try:
+        data = opener.open(request).read()
+    except urllib2.HTTPError, e:
+        data = e.read()
+
+    return json.loads(data)
+
+
 if __name__ == '__main__':
+    print "Running: Real injection over httpd, with selenium and couchdb"
     os.chdir(project_base + "/src")
 
     onerror = """
 <script>
-// couchdb query will happen here
+var corsIsDoneFlag = false;
+var corsResult = false;
+function corsIsDone() {
+  corsIsDoneFlag = true;
+}
+// Create the XHR object.
+function createCORSRequest(method, url) {
+  var xhr = new XMLHttpRequest();
+  if ("withCredentials" in xhr) {
+    // XHR for Chrome/Firefox/Opera/Safari.
+    xhr.open(method, url, true);
+  } else if (typeof XDomainRequest != "undefined") {
+    // XDomainRequest for IE.
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+  } else {
+    // CORS not supported.
+    xhr = null;
+  }
+  xhr.setRequestHeader("Content-Type","application/json");
+  return xhr;
+}
+function makeCorsRequest(uri, method, data, done) {
+  console.log("got uri: " + uri);
+  var xhr = createCORSRequest(method, uri);
+  if (!xhr) {
+    console.log('CORS not supported');
+    done();
+    return;
+  }
+  // Response handlers.
+  xhr.onload = function() {
+    console.log('OK:' + xhr.responseText);
+    corsResult = xhr.responseText;
+    done();
+  };
+  xhr.onerror = function() {
+    console.log('ERROR: ' + uri + '.');
+    done();
+  };
+  xhr.send(data);
+}
+
+window.addEventListener('error', function () {
+  var baseUrl = 'http://127.0.0.1:5984';
+  var path = '/injected';
+  var url = baseUrl + path;
+  var data = JSON.stringify({'foundError': true});
+  var method = 'POST';
+  makeCorsRequest(url, method, data, corsIsDone);
+});
+
 </script>
 """
     inport = "8777"
@@ -38,10 +108,23 @@ if __name__ == '__main__':
 
     cap.inject_body_function = ijb
 
+    # conditionally delete then create a new "injected" db
+    dbname = 'injected'
+    dbs = qdb('_all_dbs', 'GET')
+    if dbname in dbs:
+        qdb(dbname, 'DELETE')
+    qdb(dbname, 'PUT')
+
     driver = webdriver.Firefox()
     driver.get("http://127.0.0.1:" + inport + "/httpd-proxied.html")
     sleep(1)
     driver.close()
 
+    allRecords = qdb(dbname + "/_all_docs", 'GET')
+
     shutdown_thread(cap)
     shutdown_thread(httpd)
+
+    doc_id = allRecords['rows'][0]['key']
+    from_db = qdb(dbname + "/" + doc_id, 'GET')
+    assert 'foundError' in from_db
