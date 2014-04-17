@@ -120,10 +120,10 @@ window.addEventListener('error', function () {
     sleep(1)
     driver.close()
 
-    allRecords = qdb(dbname + "/_all_docs", 'GET')
-
     shutdown_thread(cap)
     shutdown_thread(httpd)
+
+    allRecords = qdb(dbname + "/_all_docs", 'GET')
 
     doc_id = allRecords['rows'][0]['key']
     from_db = qdb(dbname + "/" + doc_id, 'GET')
