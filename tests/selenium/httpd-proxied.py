@@ -77,15 +77,28 @@ function makeCorsRequest(uri, method, data, done) {
   xhr.send(data);
 }
 
-window.addEventListener('error', function () {
+var errHandler = function (evt, url, lineNumber) {
   var baseUrl = 'http://127.0.0.1:5984';
   var path = '/injected';
   var url = baseUrl + path;
-  var data = JSON.stringify({'foundError': true});
+
+
+  var error = {}
+  error = {
+     'foundError': true,
+     'filename': evt.filename || document.location.href,
+     'lineno': evt.lineno || lineNumber || -1,
+     'type': evt.type || 'unknown type',
+     'message': evt.message || evt,
+     'userAgent': navigator.userAgent || 'unknown ua'
+  };
+  console.log(error);
+  var data = JSON.stringify(error);
   var method = 'POST';
   makeCorsRequest(url, method, data, corsIsDone);
-});
-
+  return true;
+};
+window.onerror = errHandler;
 </script>
 """
     inport = "8777"
@@ -127,4 +140,10 @@ window.addEventListener('error', function () {
 
     doc_id = allRecords['rows'][0]['key']
     from_db = qdb(dbname + "/" + doc_id, 'GET')
-    assert 'foundError' in from_db
+
+    keys = ['foundError', 'filename', 'lineno',
+            'type', 'message', 'userAgent']
+
+    for key in keys:
+        assert key in from_db
+        print key, ':', from_db[key]
