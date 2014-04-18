@@ -17,7 +17,7 @@ before_install:
   - sudo service couchdb start
   - wget http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux32.zip
   - unzip chromedriver_linux32.zip
-  - export PATH=$PATH:./chromedriver
+  - export PATH=$PATH:$PWD/chromedriver
 
 before_script:
   - curl -X PUT localhost:5984/_config/httpd/enable_cors -d '"true"'
