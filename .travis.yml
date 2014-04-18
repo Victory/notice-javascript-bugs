@@ -15,6 +15,9 @@ before_install:
   - sudo apt-get remove couchdb couchdb-bin couchdb-common -yf
   - sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" install couchdb
   - sudo service couchdb start
+  - wget http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux32.zip
+  - unzip chromedriver_linux32.zip
+  - export PATH=$PATH:./chromedriver
 
 before_script:
   - curl -X PUT localhost:5984/_config/httpd/enable_cors -d '"true"'
