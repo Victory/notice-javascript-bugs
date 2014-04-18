@@ -128,7 +128,7 @@ window.onerror = errHandler;
         qdb(dbname, 'DELETE')
     qdb(dbname, 'PUT')
 
-    driver = webdriver.Firefox()
+    driver = webdriver.Chrome()
     driver.get("http://127.0.0.1:" + inport + "/httpd-proxied.html")
     sleep(1)
     driver.close()
