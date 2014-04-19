@@ -20,10 +20,11 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install google-chrome-stable
   - which google-chrome
-  - ls -lh  /usr/bin/google-chrome
   - wget http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux32.zip
   - unzip chromedriver_linux32.zip
-  - sudo ln -s `pwd`/chromedriver /usr/bin/google-chrome
+  - echo $PATH
+  - sudo ln -s `pwd`/chromedriver /usr/bin/chromedriver
+  - echo $PATH
   - sudo which chromedriver
 
 before_script:
