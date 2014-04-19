@@ -128,6 +128,9 @@ window.onerror = errHandler;
         qdb(dbname, 'DELETE')
     qdb(dbname, 'PUT')
 
+    chromedriver = "/usr/bin/chromedriver"
+    os.environ["webdriver.chrome.driver"] = chromedriver
+
     driver = webdriver.Chrome()
     driver.get("http://127.0.0.1:" + inport + "/httpd-proxied.html")
     sleep(1)
