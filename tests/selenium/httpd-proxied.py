@@ -31,6 +31,7 @@ def qdb(db, method, data=''):
 if __name__ == '__main__':
 
     chromedriver = os.getcwd() + "/chromedriver"
+    print chromedriver
     os.environ["webdriver.chrome.driver"] = chromedriver
 
     print "Running: Real injection over httpd, with selenium and couchdb"
