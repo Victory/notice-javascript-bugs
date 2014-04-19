@@ -19,6 +19,12 @@ before_install:
   - sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
   - sudo apt-get update
   - sudo apt-get install google-chrome-stable
+  - which google-chrome
+  - ls -lh  /usr/bin/google-chrome
+  - wget http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux32.zip
+  - unzip chromedriver_linux32.zip
+  - sudo ln -s `pwd`/chromedriver /usr/bin/google-chrome
+  - sudo which chromedriver
 
 before_script:
   - curl -X PUT localhost:5984/_config/httpd/enable_cors -d '"true"'
