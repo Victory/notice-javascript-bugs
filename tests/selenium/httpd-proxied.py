@@ -29,6 +29,10 @@ def qdb(db, method, data=''):
 
 
 if __name__ == '__main__':
+
+    chromedriver = os.getcwd() + "/chromedriver"
+    os.environ["webdriver.chrome.driver"] = chromedriver
+
     print "Running: Real injection over httpd, with selenium and couchdb"
     os.chdir(project_base + "/src")
 
@@ -127,9 +131,6 @@ window.onerror = errHandler;
     if dbname in dbs:
         qdb(dbname, 'DELETE')
     qdb(dbname, 'PUT')
-
-    chromedriver = "/usr/bin/chromedriver"
-    os.environ["webdriver.chrome.driver"] = chromedriver
 
     driver = webdriver.Chrome(chromedriver)
     driver.get("http://127.0.0.1:" + inport + "/httpd-proxied.html")

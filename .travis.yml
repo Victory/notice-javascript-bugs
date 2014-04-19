@@ -21,11 +21,9 @@ before_install:
   - sudo apt-get install google-chrome-stable
   - which google-chrome
   - wget http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux32.zip
-  - unzip chromedriver_linux32.zip
-  - echo $PATH
+  - unzip chromedriver_linux64.zip
   - sudo ln -s `pwd`/chromedriver /usr/bin/chromedriver
-  - echo $PATH
-  - sudo which chromedriver
+  - which chromedriver
 
 before_script:
   - curl -X PUT localhost:5984/_config/httpd/enable_cors -d '"true"'
