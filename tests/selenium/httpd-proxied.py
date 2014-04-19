@@ -30,7 +30,7 @@ def qdb(db, method, data=''):
 
 if __name__ == '__main__':
 
-    chromedriver = os.getcwd() + "/chromedriver"
+    chromedriver = "/usr/bin/chromedriver"
     print chromedriver
     os.environ["webdriver.chrome.driver"] = chromedriver
 
