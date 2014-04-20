@@ -20,6 +20,7 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install google-chrome-stable
   - which google-chrome
+  - which chrome
   - wget http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip
   - sudo ln -s `pwd`/chromedriver /usr/bin/chromedriver
