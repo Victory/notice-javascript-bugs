@@ -15,17 +15,6 @@ before_install:
   - sudo apt-get remove couchdb couchdb-bin couchdb-common -yf
   - sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" install couchdb
   - sudo service couchdb start
-  - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-  - sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-  - sudo apt-get update
-  - sudo apt-get install google-chrome-stable
-  - which google-chrome
-  - sudo ln -s /usr/bin/google-chrome /usr/bin/chrome
-  - which chrome
-  - wget http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip
-  - unzip chromedriver_linux64.zip
-  - sudo ln -s `pwd`/chromedriver /usr/bin/chromedriver
-  - which chromedriver
 
 before_script:
   - curl -X PUT localhost:5984/_config/httpd/enable_cors -d '"true"'
